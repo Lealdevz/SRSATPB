@@ -1,0 +1,113 @@
+
+/* =========================
+   BASE GLOBAL
+========================= */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #f4f6fb;
+}
+
+/* remove espaço padrão do template */
+body {
+  margin-bottom: 0;
+}
+
+/* =========================
+   LAYOUT DO SISTEMA
+========================= */
+
+.app-container {
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background-color: #1f2937;
+}
+
+.sidebar-title {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
+}
+
+.sidebar-link {
+  color: #cbd5e1;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
+/* CONTEÚDO */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  height: 60px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+   COMPONENTES GLOBAIS
+========================= */
+
+/* inputs */
+.form-control {
+  border-radius: 10px;
+}
+
+/* foco dos inputs */
+.form-control:focus {
+  box-shadow: none;
+  border-color: #4f46e5;
+}
+
+/* botões */
+.btn-primary {
+  border-radius: 10px;
+}
+
+/* =========================
+   LOGIN PAGE (ISOLADO)
+========================= */
+
+.login-body {
+  height: 100vh;
+  background: #f4f6fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+}
+
+.login-icon {
+  font-size: 42px;
+  color: #0d6efd;
+}

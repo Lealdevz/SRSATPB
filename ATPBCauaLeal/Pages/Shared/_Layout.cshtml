@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>@ViewData["Title"] - ATPBCauaLeal</title>
+
+    <script type="importmap"></script>
+
+    <link rel="stylesheet" href="~/css/cerulean.min.css"/>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+</head>
+
+<body>
+
+<div class="app-container d-flex">
+
+    <aside class="sidebar text-white p-3">
+
+        <div class="sidebar-title mb-4">
+            <h4 class="m-0">ATPB</h4>
+            <small class="text-muted">Sistema Acadêmico</small>
+        </div>
+
+        <nav class="nav flex-column">
+
+            <a class="nav-link sidebar-link" asp-page="/Index">
+                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </a>
+
+            <a class="nav-link sidebar-link" href="#">
+                <i class="bi bi-book me-2"></i> Disciplinas
+            </a>
+
+            <a class="nav-link sidebar-link" href="#">
+                <i class="bi bi-calendar-check me-2"></i> Matrícula
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <div class="content-area flex-grow-1">
+
+        <header class="topbar shadow-sm px-4 d-flex align-items-center justify-content-between">
+
+            <span class="fw-semibold">
+                Sistema Acadêmico
+            </span>
+
+            <span class="text-muted small">
+                @DateTime.Now.ToString("dd/MM/yyyy")
+            </span>
+
+        </header>
+
+       <main class="p-4">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
