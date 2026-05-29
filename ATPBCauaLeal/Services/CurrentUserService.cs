@@ -1,4 +1,4 @@
-﻿using ATPBCauaLeal.Models;
+using ATPBCauaLeal.Models;
 
 namespace ATPBCauaLeal.Services;
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace ATPBCauaLeal.Pages.Aluno;
 
 [Authorize(Roles = "Aluno")]
-public class PlanoDeEstudos : PageModel
+public class PainelModel : PageModel
 {
     public void OnGet()
     {

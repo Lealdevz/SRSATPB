@@ -1,0 +1,14 @@
+@page
+@model ATPBCauaLeal.Pages.AcessoNegadoModel
+
+@{
+    ViewData["Title"] = "Acesso negado";
+}
+
+<div class="alert alert-warning" role="alert">
+    Voce nao tem permissao para acessar esta pagina.
+</div>
+
+<a asp-page="/Index" class="btn btn-primary">
+    Voltar
+</a>

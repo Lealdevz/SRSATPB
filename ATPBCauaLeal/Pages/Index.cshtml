@@ -32,23 +32,32 @@
             <small class="text-muted">Acesse com seu login</small>
         </div>
 
-        <form>
+        @if (Model.MensagemErro is not null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.MensagemErro
+            </div>
+        }
+
+        <form method="post">
 
             <div class="mb-3">
-                <label class="form-label">Nome de usuário</label>
+                <label asp-for="Login" class="form-label">Nome de usuário</label>
                 <input type="text"
+                       asp-for="Login"
                        class="form-control"
                        placeholder="Digite seu nome de usuário" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Senha</label>
+                <label asp-for="Senha" class="form-label">Senha</label>
                 <input type="password"
+                       asp-for="Senha"
                        class="form-control"
                        placeholder="Digite sua senha" />
             </div>
 
-            <button type="button" class="btn btn-primary w-100">
+            <button type="submit" class="btn btn-primary w-100">
                 Entrar
             </button>
 
@@ -57,7 +66,7 @@
         <hr>
 
         <div class="text-center text-muted small">
-            Sistema de gestão acadêmica
+            Usuario inicial: admin / admin123
         </div>
 
     </div>

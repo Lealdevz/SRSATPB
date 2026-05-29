@@ -1,0 +1,89 @@
+@page
+@model ATPBCauaLeal.Pages.Admin.UsuariosModel
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h2 class="mb-4">Usuarios</h2>
+
+@if (Model.MensagemSucesso is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.MensagemSucesso
+    </div>
+}
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">Novo usuario</h5>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label asp-for="Nome" class="form-label">Nome</label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="Login" class="form-label">Login</label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="Senha" class="form-label">Senha inicial</label>
+                <input asp-for="Senha" type="password" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Perfil" class="form-label">Perfil</label>
+                <select asp-for="Perfil" class="form-select">
+                    @foreach (var perfil in Model.Perfis)
+                    {
+                        <option value="@perfil">@perfil</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                Cadastrar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Usuarios cadastrados</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Perfil</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <tr>
+                    <td>@usuario.Nome</td>
+                    <td>@usuario.Login</td>
+                    <td>@usuario.Perfil</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

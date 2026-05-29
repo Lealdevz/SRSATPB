@@ -1,4 +1,4 @@
-﻿namespace ATPBCauaLeal.Models;
+namespace ATPBCauaLeal.Models;
 
 public class Admin
 {

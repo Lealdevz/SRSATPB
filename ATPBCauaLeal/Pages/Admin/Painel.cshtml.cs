@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ATPBCauaLeal.Pages.Aluno;
+namespace ATPBCauaLeal.Pages.Admin;
 
-[Authorize(Roles = "Aluno")]
-public class PlanoDeEstudos : PageModel
+[Authorize(Roles = "Admin")]
+public class PainelModel : PageModel
 {
     public void OnGet()
     {

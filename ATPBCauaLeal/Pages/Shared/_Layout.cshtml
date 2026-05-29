@@ -29,17 +29,42 @@
 
         <nav class="nav flex-column">
 
-            <a class="nav-link sidebar-link" asp-page="/Index">
-                <i class="bi bi-speedometer2 me-2"></i> Dashboard
-            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="nav-link sidebar-link" asp-page="/Admin/Painel">
+                    <i class="bi bi-speedometer2 me-2"></i> Painel
+                </a>
 
-            <a class="nav-link sidebar-link" href="#">
-                <i class="bi bi-book me-2"></i> Disciplinas
-            </a>
+                <a class="nav-link sidebar-link" asp-page="/Admin/Usuarios">
+                    <i class="bi bi-people me-2"></i> Usuários
+                </a>
 
-            <a class="nav-link sidebar-link" href="#">
-                <i class="bi bi-calendar-check me-2"></i> Matrícula
-            </a>
+                <a class="nav-link sidebar-link" href="#">
+                    <i class="bi bi-calendar-week me-2"></i> Turmas
+                </a>
+            }
+
+            @if (User.IsInRole("Aluno"))
+            {
+                <a class="nav-link sidebar-link" asp-page="/Aluno/Painel">
+                    <i class="bi bi-speedometer2 me-2"></i> Painel
+                </a>
+
+                <a class="nav-link sidebar-link" asp-page="/Aluno/PlanoDeEstudos">
+                    <i class="bi bi-book me-2"></i> Plano de Estudos
+                </a>
+
+                <a class="nav-link sidebar-link" asp-page="/Aluno/Matricula">
+                    <i class="bi bi-calendar-check me-2"></i> Matrícula
+                </a>
+            }
+
+            @if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                <a class="nav-link sidebar-link" asp-page="/Index">
+                <i class="bi bi-speedometer2 me-2"></i> Painel
+                </a>
+            }
 
         </nav>
 
@@ -53,9 +78,24 @@
                 Sistema Acadêmico
             </span>
 
-            <span class="text-muted small">
-                @DateTime.Now.ToString("dd/MM/yyyy")
-            </span>
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-muted small">
+                    @DateTime.Now.ToString("dd/MM/yyyy")
+                </span>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="text-muted small">
+                        @User.Identity.Name
+                    </span>
+
+                    <form method="post" asp-page="/Index" asp-page-handler="Logout" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            Sair
+                        </button>
+                    </form>
+                }
+            </div>
 
         </header>
 
