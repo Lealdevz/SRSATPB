@@ -14,6 +14,13 @@
     </div>
 }
 
+@if (Model.MensagemErro is not null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.MensagemErro
+    </div>
+}
+
 <div class="card shadow-sm p-3 mb-4">
     <h5 class="mb-3">Novo usuario</h5>
 
@@ -68,6 +75,7 @@
                 <th>Nome</th>
                 <th>Login</th>
                 <th>Perfil</th>
+                <th class="text-end">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -77,6 +85,22 @@
                     <td>@usuario.Nome</td>
                     <td>@usuario.Login</td>
                     <td>@usuario.Perfil</td>
+                    <td class="text-end">
+                        <a asp-page="/Admin/EditarUsuario"
+                           asp-route-id="@usuario.Id"
+                           class="btn btn-sm btn-outline-primary">
+                            Editar
+                        </a>
+
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              asp-route-id="@usuario.Id"
+                              class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             }
             </tbody>

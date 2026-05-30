@@ -38,6 +38,9 @@ public class UsuariosModel : PageModel
     [TempData]
     public string? MensagemSucesso { get; set; }
 
+    [TempData]
+    public string? MensagemErro { get; set; }
+
     public async Task OnGetAsync()
     {
         await CarregarUsuariosAsync();
@@ -71,6 +74,27 @@ public class UsuariosModel : PageModel
         return RedirectToPage();
     }
 
+    public async Task<IActionResult> OnPostExcluirAsync(string id)
+    {
+        var usuario = await _userManager.FindByIdAsync(id);
+
+        if (usuario is null)
+        {
+            return RedirectToPage();
+        }
+
+        if (usuario.Id == _userManager.GetUserId(User))
+        {
+            MensagemErro = "Voce nao pode excluir o proprio usuario.";
+            return RedirectToPage();
+        }
+
+        await _userManager.DeleteAsync(usuario);
+
+        MensagemSucesso = "Usuario excluido com sucesso.";
+        return RedirectToPage();
+    }
+
     private async Task CarregarUsuariosAsync()
     {
         var usuarios = await _userManager.Users.OrderBy(usuario => usuario.Nome).ToListAsync();
@@ -78,9 +102,9 @@ public class UsuariosModel : PageModel
         foreach (var usuario in usuarios)
         {
             var perfis = await _userManager.GetRolesAsync(usuario);
-            Usuarios.Add(new UsuarioResumo(usuario.Nome, usuario.UserName ?? "", perfis.FirstOrDefault() ?? "-"));
+            Usuarios.Add(new UsuarioResumo(usuario.Id, usuario.Nome, usuario.UserName ?? "", perfis.FirstOrDefault() ?? "-"));
         }
     }
 }
 
-public record UsuarioResumo(string Nome, string Login, string Perfil);
+public record UsuarioResumo(string Id, string Nome, string Login, string Perfil);
