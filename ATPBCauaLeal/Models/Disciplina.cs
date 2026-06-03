@@ -4,6 +4,10 @@ public class Disciplina
 {
     public int Id { get; set; }
 
+    public int CursoId { get; set; }
+
+    public Curso? Curso { get; set; }
+
     public string Codigo { get; set; } = string.Empty;
 
     public string Nome { get; set; } = string.Empty;
