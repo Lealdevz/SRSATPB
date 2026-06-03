@@ -1,0 +1,120 @@
+@page
+@model ATPBCauaLeal.Pages.Admin.DisciplinasModel
+
+@{
+    ViewData["Title"] = "Disciplinas";
+}
+
+<h2 class="mb-4">Disciplinas</h2>
+
+@if (Model.MensagemSucesso is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.MensagemSucesso
+    </div>
+}
+
+@if (Model.MensagemErro is not null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.MensagemErro
+    </div>
+}
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">Nova disciplina</h5>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label asp-for="CursoId" class="form-label">Curso</label>
+                <select asp-for="CursoId" asp-items="Model.Cursos" class="form-select">
+                    <option value="">Selecione</option>
+                </select>
+                <span asp-validation-for="CursoId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Codigo" class="form-label">Codigo</label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Nome" class="form-label">Nome</label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="CargaHoraria" class="form-label">Carga horaria</label>
+                <input asp-for="CargaHoraria" class="form-control" />
+                <span asp-validation-for="CargaHoraria" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-check mt-3">
+            <input asp-for="Obrigatoria" class="form-check-input" />
+            <label asp-for="Obrigatoria" class="form-check-label">Disciplina obrigatoria</label>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                Cadastrar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Disciplinas cadastradas</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Carga horaria</th>
+                <th>Tipo</th>
+                <th class="text-end">Acoes</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var disciplina in Model.Disciplinas)
+            {
+                <tr>
+                    <td>@disciplina.Curso?.Nome</td>
+                    <td>@disciplina.Codigo</td>
+                    <td>@disciplina.Nome</td>
+                    <td>@disciplina.CargaHoraria horas</td>
+                    <td>@(disciplina.Obrigatoria ? "Obrigatoria" : "Optativa")</td>
+                    <td class="text-end">
+                        <a asp-page="/Admin/EditarDisciplina"
+                           asp-route-id="@disciplina.Id"
+                           class="btn btn-sm btn-outline-primary">
+                            Editar
+                        </a>
+
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              asp-route-id="@disciplina.Id"
+                              class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -3,6 +3,7 @@ using System;
 using ATPBCauaLeal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATPBCauaLeal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260603233037_CadastroCursos")]
+    partial class CadastroCursos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -100,37 +103,7 @@ namespace ATPBCauaLeal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cursos", (string)null);
-                });
-
-            modelBuilder.Entity("ATPBCauaLeal.Models.Disciplina", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CargaHoraria")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CursoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Obrigatoria")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("Disciplinas", (string)null);
+                    b.ToTable("Cursos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -259,17 +232,6 @@ namespace ATPBCauaLeal.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ATPBCauaLeal.Models.Disciplina", b =>
-                {
-                    b.HasOne("ATPBCauaLeal.Models.Curso", "Curso")
-                        .WithMany()
-                        .HasForeignKey("CursoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Curso");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
