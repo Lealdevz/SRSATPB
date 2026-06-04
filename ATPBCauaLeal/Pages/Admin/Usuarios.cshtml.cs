@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using ATPBCauaLeal.Data;
 using ATPBCauaLeal.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,10 +13,12 @@ namespace ATPBCauaLeal.Pages.Admin;
 public class UsuariosModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ApplicationDbContext _context;
 
-    public UsuariosModel(UserManager<ApplicationUser> userManager)
+    public UsuariosModel(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
     {
         _userManager = userManager;
+        _context = context;
     }
 
     [BindProperty, Required(ErrorMessage = "Informe o nome.")]
@@ -86,6 +89,24 @@ public class UsuariosModel : PageModel
         if (usuario.Id == _userManager.GetUserId(User))
         {
             MensagemErro = "Voce nao pode excluir o proprio usuario.";
+            return RedirectToPage();
+        }
+
+        var possuiTurmas = await _context.Turmas
+            .AnyAsync(turma => turma.ProfessorId == usuario.Id);
+
+        if (possuiTurmas)
+        {
+            MensagemErro = "Nao e possivel excluir um professor que possui turmas cadastradas.";
+            return RedirectToPage();
+        }
+
+        var possuiOrientandos = await _context.Users
+            .AnyAsync(aluno => aluno.OrientadorId == usuario.Id);
+
+        if (possuiOrientandos)
+        {
+            MensagemErro = "Nao e possivel excluir um professor que possui alunos orientandos.";
             return RedirectToPage();
         }
 

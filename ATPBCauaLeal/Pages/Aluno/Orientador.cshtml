@@ -1,19 +1,53 @@
-﻿@page
-@model ATPBCauaLeal.Pages.Aluno.Orientador
+@page
+@model ATPBCauaLeal.Pages.Aluno.OrientadorModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Orientador";
 }
 
-<!DOCTYPE html>
+<h2 class="mb-4">Orientador</h2>
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+@if (Model.MensagemSucesso is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.MensagemSucesso
+    </div>
+}
+
+@if (Model.MensagemErro is not null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.MensagemErro
+    </div>
+}
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Escolher orientador</h5>
+
+    @if (Model.NomeOrientadorAtual is not null)
+    {
+        <p class="mb-3">
+            Orientador atual: <strong>@Model.NomeOrientadorAtual</strong>
+        </p>
+    }
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="OrientadorId" class="form-label">Professor</label>
+            <select asp-for="OrientadorId" asp-items="Model.Professores" class="form-select">
+                <option value="">Selecione</option>
+            </select>
+            <span asp-validation-for="OrientadorId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" disabled="@(Model.Professores.Count == 0)">
+            Salvar
+        </button>
+    </form>
 </div>
-</body>
-</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -6,7 +6,11 @@ public class Turma
 
     public int DisciplinaId { get; set; }
 
-    public int ProfessorId { get; set; }
+    public Disciplina? Disciplina { get; set; }
+
+    public string ProfessorId { get; set; } = string.Empty;
+
+    public ApplicationUser? Professor { get; set; }
 
     public string Codigo { get; set; } = string.Empty;
 

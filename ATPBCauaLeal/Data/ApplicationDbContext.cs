@@ -15,6 +15,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Disciplina> Disciplinas => Set<Disciplina>();
 
+    public DbSet<Turma> Turmas => Set<Turma>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

@@ -85,6 +85,15 @@ public class DisciplinasModel : PageModel
 
         if (disciplina is not null)
         {
+            var possuiTurmas = await _context.Turmas
+                .AnyAsync(turma => turma.DisciplinaId == id);
+
+            if (possuiTurmas)
+            {
+                MensagemErro = "Nao e possivel excluir uma disciplina que possui turmas cadastradas.";
+                return RedirectToPage();
+            }
+
             _context.Disciplinas.Remove(disciplina);
             await _context.SaveChangesAsync();
             MensagemSucesso = "Disciplina excluida com sucesso.";

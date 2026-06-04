@@ -1,0 +1,68 @@
+@page
+@model ATPBCauaLeal.Pages.Admin.EditarTurmaModel
+
+@{
+    ViewData["Title"] = "Editar turma";
+}
+
+<h2 class="mb-4">Editar turma</h2>
+
+<div class="card shadow-sm p-3">
+    <form method="post">
+        <input asp-for="Id" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="DisciplinaId" class="form-label">Disciplina</label>
+            <select asp-for="DisciplinaId" asp-items="Model.Disciplinas" class="form-select">
+                <option value="">Selecione</option>
+            </select>
+            <span asp-validation-for="DisciplinaId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ProfessorId" class="form-label">Professor</label>
+            <select asp-for="ProfessorId" asp-items="Model.Professores" class="form-select">
+                <option value="">Selecione</option>
+            </select>
+            <span asp-validation-for="ProfessorId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Codigo" class="form-label">Codigo</label>
+            <input asp-for="Codigo" class="form-control" />
+            <span asp-validation-for="Codigo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DiasSemana" class="form-label">Dias da semana</label>
+            <input asp-for="DiasSemana" class="form-control" />
+            <span asp-validation-for="DiasSemana" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Horario" class="form-label">Horario</label>
+            <input asp-for="Horario" class="form-control" />
+            <span asp-validation-for="Horario" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Capacidade" class="form-label">Capacidade</label>
+            <input asp-for="Capacidade" class="form-control" />
+            <span asp-validation-for="Capacidade" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Salvar
+        </button>
+
+        <a asp-page="/Admin/Turmas" class="btn btn-outline-secondary">
+            Cancelar
+        </a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

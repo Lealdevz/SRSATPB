@@ -1,0 +1,133 @@
+@page
+@model ATPBCauaLeal.Pages.Admin.TurmasModel
+
+@{
+    ViewData["Title"] = "Turmas";
+}
+
+<h2 class="mb-4">Turmas</h2>
+
+@if (Model.MensagemSucesso is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.MensagemSucesso
+    </div>
+}
+
+@if (Model.MensagemErro is not null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.MensagemErro
+    </div>
+}
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">Nova turma</h5>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+            <div class="col-md-5">
+                <label asp-for="DisciplinaId" class="form-label">Disciplina</label>
+                <select asp-for="DisciplinaId" asp-items="Model.Disciplinas" class="form-select">
+                    <option value="">Selecione</option>
+                </select>
+                <span asp-validation-for="DisciplinaId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="ProfessorId" class="form-label">Professor</label>
+                <select asp-for="ProfessorId" asp-items="Model.Professores" class="form-select">
+                    <option value="">Selecione</option>
+                </select>
+                <span asp-validation-for="ProfessorId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="Codigo" class="form-label">Codigo</label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="DiasSemana" class="form-label">Dias da semana</label>
+                <input asp-for="DiasSemana" class="form-control" />
+                <span asp-validation-for="DiasSemana" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Horario" class="form-label">Horario</label>
+                <input asp-for="Horario" class="form-control" />
+                <span asp-validation-for="Horario" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Capacidade" class="form-label">Capacidade</label>
+                <input asp-for="Capacidade" class="form-control" />
+                <span asp-validation-for="Capacidade" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                Cadastrar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Turmas cadastradas</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Disciplina</th>
+                <th>Professor</th>
+                <th>Codigo</th>
+                <th>Dias</th>
+                <th>Horario</th>
+                <th>Vagas</th>
+                <th class="text-end">Acoes</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var turma in Model.Turmas)
+            {
+                <tr>
+                    <td>@turma.Disciplina?.Curso?.Nome</td>
+                    <td>@turma.Disciplina?.Nome</td>
+                    <td>@turma.Professor?.Nome</td>
+                    <td>@turma.Codigo</td>
+                    <td>@turma.DiasSemana</td>
+                    <td>@turma.Horario</td>
+                    <td>@turma.VagasDisponiveis/@turma.Capacidade</td>
+                    <td class="text-end">
+                        <a asp-page="/Admin/EditarTurma"
+                           asp-route-id="@turma.Id"
+                           class="btn btn-sm btn-outline-primary">
+                            Editar
+                        </a>
+
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              asp-route-id="@turma.Id"
+                              class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
