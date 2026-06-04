@@ -31,13 +31,18 @@ public class OrientadorModel : PageModel
     [TempData]
     public string? MensagemErro { get; set; }
 
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<IActionResult> OnGetAsync(bool editar = false)
     {
         var aluno = await ObterAlunoAtualAsync();
 
         if (aluno is null)
         {
             return RedirectToPage("/Index");
+        }
+
+        if (!string.IsNullOrWhiteSpace(aluno.OrientadorId) && !editar)
+        {
+            return RedirectToPage("/Aluno/OrientadorEscolhido");
         }
 
         OrientadorId = aluno.OrientadorId ?? string.Empty;
@@ -72,7 +77,7 @@ public class OrientadorModel : PageModel
         await _userManager.UpdateAsync(aluno);
 
         MensagemSucesso = "Orientador escolhido com sucesso.";
-        return RedirectToPage();
+        return RedirectToPage("/Aluno/OrientadorEscolhido");
     }
 
     private async Task<ApplicationUser?> ObterAlunoAtualAsync()

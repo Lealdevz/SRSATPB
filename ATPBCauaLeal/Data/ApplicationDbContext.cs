@@ -17,6 +17,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Turma> Turmas => Set<Turma>();
 
+    public DbSet<PlanoDeEstudos> PlanosDeEstudos => Set<PlanoDeEstudos>();
+
+    public DbSet<PlanoDeEstudosDisciplina> PlanoDeEstudosDisciplinas => Set<PlanoDeEstudosDisciplina>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

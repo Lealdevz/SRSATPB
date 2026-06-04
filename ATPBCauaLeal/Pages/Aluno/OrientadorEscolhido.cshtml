@@ -1,0 +1,31 @@
+@page
+@model ATPBCauaLeal.Pages.Aluno.OrientadorEscolhidoModel
+
+@{
+    ViewData["Title"] = "Orientador";
+}
+
+<h2 class="mb-4">Orientador</h2>
+
+@if (TempData["MensagemSucesso"] is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Orientador escolhido</h5>
+
+    <p class="mb-0">
+        Seu orientador atual é <strong>@Model.NomeOrientador</strong>.
+    </p>
+</div>
+
+<div class="mt-3">
+    <a asp-page="/Aluno/Orientador"
+       asp-route-editar="true"
+       class="btn btn-outline-secondary">
+        Alterar orientador
+    </a>
+</div>

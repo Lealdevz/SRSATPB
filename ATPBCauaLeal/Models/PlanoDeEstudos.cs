@@ -4,11 +4,15 @@ public class PlanoDeEstudos
 {
     public int Id { get; set; }
 
-    public int AlunoId { get; set; }
+    public string AlunoId { get; set; } = string.Empty;
+
+    public ApplicationUser? Aluno { get; set; }
 
     public int CursoId { get; set; }
 
-    public List<int> DisciplinasEscolhidasIds { get; set; } = new();
+    public Curso? Curso { get; set; }
+
+    public List<PlanoDeEstudosDisciplina> Disciplinas { get; set; } = new();
 
     public DateTime CriadoEm { get; set; } = DateTime.Now;
 

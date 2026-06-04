@@ -1,0 +1,76 @@
+@page
+@model ATPBCauaLeal.Pages.Aluno.PlanoMontadoModel
+
+@{
+    ViewData["Title"] = "Plano Montado";
+}
+
+<h2 class="mb-4">Plano Montado</h2>
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">Resumo</h5>
+
+    <p class="mb-0">
+        Carga horaria faltante: <strong>@Model.CargaHorariaFaltante horas</strong>
+    </p>
+</div>
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">Obrigatorias faltantes</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Disciplina</th>
+                <th>Carga horaria</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var disciplina in Model.ObrigatoriasFaltantes)
+            {
+                <tr>
+                    <td>@disciplina.Codigo</td>
+                    <td>@disciplina.Nome</td>
+                    <td>@disciplina.CargaHoraria horas</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Optativas faltantes</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Disciplina</th>
+                <th>Carga horaria</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var disciplina in Model.OptativasFaltantes)
+            {
+                <tr>
+                    <td>@disciplina.Codigo</td>
+                    <td>@disciplina.Nome</td>
+                    <td>@disciplina.CargaHoraria horas</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-page="/Aluno/PlanoDeEstudos"
+       asp-route-editar="true"
+       class="btn btn-outline-secondary">
+        Alterar disciplinas cursadas
+    </a>
+</div>
