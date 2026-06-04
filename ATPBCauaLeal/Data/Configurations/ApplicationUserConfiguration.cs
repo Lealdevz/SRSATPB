@@ -12,5 +12,10 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
             .WithMany()
             .HasForeignKey(usuario => usuario.OrientadorId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(usuario => usuario.Curso)
+            .WithMany()
+            .HasForeignKey(usuario => usuario.CursoId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

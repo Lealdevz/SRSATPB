@@ -9,4 +9,8 @@ public class ApplicationUser : IdentityUser
     public string? OrientadorId { get; set; }
 
     public ApplicationUser? Orientador { get; set; }
+
+    public int? CursoId { get; set; }
+
+    public Curso? Curso { get; set; }
 }

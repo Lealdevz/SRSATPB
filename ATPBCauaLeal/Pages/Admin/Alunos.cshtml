@@ -1,0 +1,70 @@
+@page
+@model ATPBCauaLeal.Pages.Admin.AlunosModel
+
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<h2 class="mb-4">Alunos</h2>
+
+@if (Model.MensagemSucesso is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.MensagemSucesso
+    </div>
+}
+
+@if (Model.MensagemErro is not null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.MensagemErro
+    </div>
+}
+
+<div class="card shadow-sm p-3">
+    <h5 class="mb-3">Cursos dos alunos</h5>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Curso atual</th>
+                <th>Alterar curso</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var aluno in Model.Alunos)
+            {
+                <tr>
+                    <td>@aluno.Nome</td>
+                    <td>@aluno.Login</td>
+                    <td>@aluno.Curso</td>
+                    <td>
+                        <form method="post"
+                              asp-page-handler="SalvarCurso"
+                              class="d-flex gap-2">
+                            <input type="hidden" name="AlunoId" value="@aluno.Id" />
+
+                            <select name="CursoId" class="form-select form-select-sm">
+                                <option value="">Sem curso</option>
+                                @foreach (var curso in Model.Cursos)
+                                {
+                                    <option value="@curso.Value" selected="@(curso.Value == aluno.CursoId?.ToString())">
+                                        @curso.Text
+                                    </option>
+                                }
+                            </select>
+
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Salvar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
