@@ -28,8 +28,8 @@ public class DisciplinasModel : PageModel
     [BindProperty, Required(ErrorMessage = "Informe o nome.")]
     public string Nome { get; set; } = string.Empty;
 
-    [BindProperty, Required(ErrorMessage = "Informe a carga horaria.")]
-    [Range(1, 1000, ErrorMessage = "Informe uma carga horaria valida.")]
+    [BindProperty, Required(ErrorMessage = "Informe a carga horária.")]
+    [Range(1, 1000, ErrorMessage = "Informe uma carga horária válida.")]
     public int CargaHoraria { get; set; }
 
     [BindProperty]
@@ -54,7 +54,7 @@ public class DisciplinasModel : PageModel
     {
         if (!await _context.Cursos.AnyAsync(curso => curso.Id == CursoId))
         {
-            ModelState.AddModelError(nameof(CursoId), "Curso invalido.");
+            ModelState.AddModelError(nameof(CursoId), "Curso inválido.");
         }
 
         if (!ModelState.IsValid)
@@ -90,13 +90,13 @@ public class DisciplinasModel : PageModel
 
             if (possuiTurmas)
             {
-                MensagemErro = "Nao e possivel excluir uma disciplina que possui turmas cadastradas.";
+                MensagemErro = "Não é possível excluir uma disciplina que possui turmas cadastradas.";
                 return RedirectToPage();
             }
 
             _context.Disciplinas.Remove(disciplina);
             await _context.SaveChangesAsync();
-            MensagemSucesso = "Disciplina excluida com sucesso.";
+            MensagemSucesso = "Disciplina excluída com sucesso.";
         }
 
         return RedirectToPage();

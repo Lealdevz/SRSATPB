@@ -34,7 +34,6 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
             .HasForeignKey(turma => turma.ProfessorId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Ignore(turma => turma.AlunosMatriculadosIds);
         builder.Ignore(turma => turma.VagasDisponiveis);
         builder.Ignore(turma => turma.EstaCheia);
     }

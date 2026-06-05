@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-md-2">
-                <label asp-for="Codigo" class="form-label">Codigo</label>
+                <label asp-for="Codigo" class="form-label">Código</label>
                 <input asp-for="Codigo" class="form-control" />
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="col-md-2">
-                <label asp-for="CargaHoraria" class="form-label">Carga horaria</label>
+                <label asp-for="CargaHoraria" class="form-label">Carga horária</label>
                 <input asp-for="CargaHoraria" class="form-control" />
                 <span asp-validation-for="CargaHoraria" class="text-danger"></span>
             </div>
@@ -57,7 +57,7 @@
 
         <div class="form-check mt-3">
             <input asp-for="Obrigatoria" class="form-check-input" />
-            <label asp-for="Obrigatoria" class="form-check-label">Disciplina obrigatoria</label>
+            <label asp-for="Obrigatoria" class="form-check-label">Disciplina obrigatória</label>
         </div>
 
         <div class="mt-3">
@@ -76,11 +76,11 @@
             <thead>
             <tr>
                 <th>Curso</th>
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Nome</th>
-                <th>Carga horaria</th>
+                <th>Carga horária</th>
                 <th>Tipo</th>
-                <th class="text-end">Acoes</th>
+                <th class="text-end">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -91,7 +91,7 @@
                     <td>@disciplina.Codigo</td>
                     <td>@disciplina.Nome</td>
                     <td>@disciplina.CargaHoraria horas</td>
-                    <td>@(disciplina.Obrigatoria ? "Obrigatoria" : "Optativa")</td>
+                    <td>@(disciplina.Obrigatoria ? "Obrigatória" : "Optativa")</td>
                     <td class="text-end">
                         <a asp-page="/Admin/EditarDisciplina"
                            asp-route-id="@disciplina.Id"

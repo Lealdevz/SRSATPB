@@ -20,9 +20,7 @@ public class Turma
 
     public int Capacidade { get; set; }
 
-    public List<int> AlunosMatriculadosIds { get; set; } = new();
-
-    public int VagasDisponiveis => Math.Max(0, Capacidade - AlunosMatriculadosIds.Count);
+    public int VagasDisponiveis => Capacidade;
 
     public bool EstaCheia => VagasDisponiveis == 0;
 }

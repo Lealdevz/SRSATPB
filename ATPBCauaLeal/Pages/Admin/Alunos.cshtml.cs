@@ -48,13 +48,13 @@ public class AlunosModel : PageModel
 
         if (aluno is null || !await _userManager.IsInRoleAsync(aluno, nameof(UserRole.Aluno)))
         {
-            MensagemErro = "Aluno invalido.";
+            MensagemErro = "Aluno inválido.";
             return RedirectToPage();
         }
 
         if (CursoId.HasValue && !await _context.Cursos.AnyAsync(curso => curso.Id == CursoId.Value))
         {
-            MensagemErro = "Curso invalido.";
+            MensagemErro = "Curso inválido.";
             return RedirectToPage();
         }
 

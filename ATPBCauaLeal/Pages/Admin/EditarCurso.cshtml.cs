@@ -22,8 +22,8 @@ public class EditarCursoModel : PageModel
     [BindProperty, Required(ErrorMessage = "Informe o nome do curso.")]
     public string Nome { get; set; } = string.Empty;
 
-    [BindProperty, Required(ErrorMessage = "Informe a carga horaria minima.")]
-    [Range(1, 10000, ErrorMessage = "Informe uma carga horaria valida.")]
+    [BindProperty, Required(ErrorMessage = "Informe a carga horária mínima.")]
+    [Range(1, 10000, ErrorMessage = "Informe uma carga horária válida.")]
     public int CargaHorariaMinima { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)

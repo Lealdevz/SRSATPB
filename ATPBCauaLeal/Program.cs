@@ -1,5 +1,6 @@
 using ATPBCauaLeal.Data;
 using ATPBCauaLeal.Models;
+using ATPBCauaLeal.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<PlanoDeEstudosService>();
 
 var app = builder.Build();
 

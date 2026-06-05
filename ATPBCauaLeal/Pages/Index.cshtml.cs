@@ -48,7 +48,7 @@ public class IndexModel : PageModel
 
         if (!resultado.Succeeded)
         {
-            MensagemErro = "Usuario ou senha invalidos.";
+            MensagemErro = "Usuário ou senha inválidos.";
             return Page();
         }
 

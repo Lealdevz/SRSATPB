@@ -1,0 +1,51 @@
+@page
+@model ATPBCauaLeal.Pages.Aluno.TurmasDisciplinaModel
+
+@{
+    ViewData["Title"] = "Turmas";
+}
+
+<h2 class="mb-4">Turmas</h2>
+
+<div class="card shadow-sm p-3 mb-4">
+    <h5 class="mb-3">@Model.CodigoDisciplina - @Model.NomeDisciplina</h5>
+
+    @if (Model.Turmas.Count == 0)
+    {
+        <div class="alert alert-info mb-0" role="alert">
+            Ainda não existem turmas cadastradas para esta disciplina.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Professor</th>
+                    <th>Dias</th>
+                    <th>Horário</th>
+                    <th>Vagas</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var turma in Model.Turmas)
+                {
+                    <tr>
+                        <td>@turma.Codigo</td>
+                        <td>@turma.Professor</td>
+                        <td>@turma.DiasSemana</td>
+                        <td>@turma.Horario</td>
+                        <td>@turma.VagasDisponiveis/@turma.Capacidade</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<a asp-page="/Aluno/PlanoMontado" class="btn btn-outline-secondary">
+    Voltar para o plano
+</a>

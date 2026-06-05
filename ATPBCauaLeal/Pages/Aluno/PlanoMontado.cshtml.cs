@@ -1,23 +1,24 @@
-using ATPBCauaLeal.Data;
 using ATPBCauaLeal.Models;
+using ATPBCauaLeal.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace ATPBCauaLeal.Pages.Aluno;
 
 [Authorize(Roles = "Aluno")]
 public class PlanoMontadoModel : PageModel
 {
-    private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly PlanoDeEstudosService _planoDeEstudosService;
 
-    public PlanoMontadoModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public PlanoMontadoModel(
+        UserManager<ApplicationUser> userManager,
+        PlanoDeEstudosService planoDeEstudosService)
     {
-        _context = context;
         _userManager = userManager;
+        _planoDeEstudosService = planoDeEstudosService;
     }
 
     public string? NomeCurso { get; set; }
@@ -37,45 +38,18 @@ public class PlanoMontadoModel : PageModel
             return RedirectToPage("/Index");
         }
 
-        var plano = await _context.PlanosDeEstudos
-            .Include(plano => plano.Curso)
-            .Include(plano => plano.Disciplinas)
-            .ThenInclude(item => item.Disciplina)
-            .FirstOrDefaultAsync(plano => plano.AlunoId == alunoId);
+        var plano = await _planoDeEstudosService.ObterPlanoMontadoAsync(alunoId);
 
         if (plano is null)
         {
             return RedirectToPage("/Aluno/PlanoDeEstudos");
         }
 
-        NomeCurso = plano.Curso?.Nome;
-
-        var disciplinasFaltantes = plano.Disciplinas
-            .Where(item => item.Disciplina is not null)
-            .Select(item => item.Disciplina!)
-            .OrderBy(disciplina => disciplina.Nome)
-            .ToList();
-
-        ObrigatoriasFaltantes = disciplinasFaltantes
-            .Where(disciplina => disciplina.Obrigatoria)
-            .Select(disciplina => new DisciplinaPlano(
-                disciplina.Codigo,
-                disciplina.Nome,
-                disciplina.CargaHoraria))
-            .ToList();
-
-        OptativasFaltantes = disciplinasFaltantes
-            .Where(disciplina => !disciplina.Obrigatoria)
-            .Select(disciplina => new DisciplinaPlano(
-                disciplina.Codigo,
-                disciplina.Nome,
-                disciplina.CargaHoraria))
-            .ToList();
-
-        CargaHorariaFaltante = disciplinasFaltantes.Sum(disciplina => disciplina.CargaHoraria);
+        NomeCurso = plano.NomeCurso;
+        ObrigatoriasFaltantes = plano.ObrigatoriasFaltantes;
+        OptativasFaltantes = plano.OptativasFaltantes;
+        CargaHorariaFaltante = plano.CargaHorariaFaltante;
 
         return Page();
     }
 }
-
-public record DisciplinaPlano(string Codigo, string Nome, int CargaHoraria);

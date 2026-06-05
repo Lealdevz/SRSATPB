@@ -64,7 +64,7 @@ public class OrientadorModel : PageModel
 
         if (orientador is null || !await _userManager.IsInRoleAsync(orientador, nameof(UserRole.Professor)))
         {
-            ModelState.AddModelError(nameof(OrientadorId), "Orientador invalido.");
+            ModelState.AddModelError(nameof(OrientadorId), "Orientador inválido.");
         }
 
         if (!ModelState.IsValid)
@@ -102,7 +102,7 @@ public class OrientadorModel : PageModel
 
         if (Professores.Count == 0)
         {
-            MensagemErro = "Ainda nao existem professores cadastrados.";
+            MensagemErro = "Ainda não existem professores cadastrados.";
         }
     }
 }

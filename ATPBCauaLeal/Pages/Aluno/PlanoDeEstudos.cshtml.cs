@@ -1,5 +1,6 @@
 using ATPBCauaLeal.Data;
 using ATPBCauaLeal.Models;
+using ATPBCauaLeal.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,16 @@ public class PlanoDeEstudosModel : PageModel
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly PlanoDeEstudosService _planoDeEstudosService;
 
-    public PlanoDeEstudosModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public PlanoDeEstudosModel(
+        ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        PlanoDeEstudosService planoDeEstudosService)
     {
         _context = context;
         _userManager = userManager;
+        _planoDeEstudosService = planoDeEstudosService;
     }
 
     [BindProperty]
@@ -44,8 +50,7 @@ public class PlanoDeEstudosModel : PageModel
             return RedirectToPage("/Index");
         }
 
-        var possuiPlano = await _context.PlanosDeEstudos
-            .AnyAsync(plano => plano.AlunoId == aluno.Id);
+        var possuiPlano = await _planoDeEstudosService.PossuiPlanoAsync(aluno.Id);
 
         if (possuiPlano && !editar)
         {
@@ -67,53 +72,11 @@ public class PlanoDeEstudosModel : PageModel
 
         if (!aluno.CursoId.HasValue)
         {
-            MensagemErro = "Seu curso ainda nao foi definido pelo administrador.";
+            MensagemErro = "Seu curso ainda não foi definido pelo administrador.";
             return RedirectToPage();
         }
 
-        var disciplinasDoCurso = await _context.Disciplinas
-            .Where(disciplina => disciplina.CursoId == aluno.CursoId.Value)
-            .ToListAsync();
-
-        var idsDisciplinasDoCurso = disciplinasDoCurso.Select(disciplina => disciplina.Id).ToList();
-
-        var concluidasValidas = DisciplinasConcluidas
-            .Where(id => idsDisciplinasDoCurso.Contains(id))
-            .Distinct()
-            .ToList();
-
-        var disciplinasFaltantes = disciplinasDoCurso
-            .Where(disciplina => !concluidasValidas.Contains(disciplina.Id))
-            .Select(disciplina => disciplina.Id)
-            .ToList();
-
-        var plano = await _context.PlanosDeEstudos
-            .Include(plano => plano.Disciplinas)
-            .FirstOrDefaultAsync(plano => plano.AlunoId == aluno.Id);
-
-        if (plano is null)
-        {
-            plano = new Models.PlanoDeEstudos
-            {
-                AlunoId = aluno.Id,
-                CursoId = aluno.CursoId.Value,
-                CriadoEm = DateTime.Now
-            };
-
-            _context.PlanosDeEstudos.Add(plano);
-        }
-        else
-        {
-            plano.CursoId = aluno.CursoId.Value;
-            plano.ConcluidoEm = null;
-            _context.PlanoDeEstudosDisciplinas.RemoveRange(plano.Disciplinas);
-        }
-
-        plano.Disciplinas = disciplinasFaltantes
-            .Select(id => new PlanoDeEstudosDisciplina { DisciplinaId = id })
-            .ToList();
-
-        await _context.SaveChangesAsync();
+        await _planoDeEstudosService.SalvarPlanoAsync(aluno, DisciplinasConcluidas);
 
         return RedirectToPage("/Aluno/PlanoMontado");
     }
@@ -129,47 +92,15 @@ public class PlanoDeEstudosModel : PageModel
     {
         if (!aluno.CursoId.HasValue)
         {
-            MensagemErro = "Seu curso ainda nao foi definido pelo administrador.";
+            MensagemErro = "Seu curso ainda não foi definido pelo administrador.";
             return;
         }
 
         NomeCurso = aluno.Curso?.Nome;
 
-        var disciplinasFaltantes = await _context.PlanosDeEstudos
-            .Where(plano => plano.AlunoId == aluno.Id)
-            .SelectMany(plano => plano.Disciplinas)
-            .Select(item => item.DisciplinaId)
-            .ToListAsync();
+        var selecao = await _planoDeEstudosService.ObterSelecaoAsync(aluno);
 
-        var existePlano = await _context.PlanosDeEstudos
-            .AnyAsync(plano => plano.AlunoId == aluno.Id);
-
-        var disciplinas = await _context.Disciplinas
-            .Where(disciplina => disciplina.CursoId == aluno.CursoId.Value)
-            .OrderBy(disciplina => disciplina.Nome)
-            .Select(disciplina => new DisciplinaOpcao(
-                disciplina.Id,
-                disciplina.Codigo,
-                disciplina.Nome,
-                disciplina.CargaHoraria,
-                disciplina.Obrigatoria,
-                existePlano && !disciplinasFaltantes.Contains(disciplina.Id)))
-            .ToListAsync();
-
-        DisciplinasObrigatorias = disciplinas
-            .Where(disciplina => disciplina.Obrigatoria)
-            .ToList();
-
-        DisciplinasOptativas = disciplinas
-            .Where(disciplina => !disciplina.Obrigatoria)
-            .ToList();
+        DisciplinasObrigatorias = selecao.DisciplinasObrigatorias;
+        DisciplinasOptativas = selecao.DisciplinasOptativas;
     }
 }
-
-public record DisciplinaOpcao(
-    int Id,
-    string Codigo,
-    string Nome,
-    int CargaHoraria,
-    bool Obrigatoria,
-    bool Concluida);

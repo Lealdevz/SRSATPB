@@ -73,7 +73,7 @@ public class UsuariosModel : PageModel
 
         await _userManager.AddToRoleAsync(usuario, Perfil);
 
-        MensagemSucesso = "Usuario cadastrado com sucesso.";
+        MensagemSucesso = "Usuário cadastrado com sucesso.";
         return RedirectToPage();
     }
 
@@ -88,7 +88,7 @@ public class UsuariosModel : PageModel
 
         if (usuario.Id == _userManager.GetUserId(User))
         {
-            MensagemErro = "Voce nao pode excluir o proprio usuario.";
+            MensagemErro = "Você não pode excluir o próprio usuário.";
             return RedirectToPage();
         }
 
@@ -97,7 +97,7 @@ public class UsuariosModel : PageModel
 
         if (possuiTurmas)
         {
-            MensagemErro = "Nao e possivel excluir um professor que possui turmas cadastradas.";
+            MensagemErro = "Não é possível excluir um professor que possui turmas cadastradas.";
             return RedirectToPage();
         }
 
@@ -106,13 +106,13 @@ public class UsuariosModel : PageModel
 
         if (possuiOrientandos)
         {
-            MensagemErro = "Nao e possivel excluir um professor que possui alunos orientandos.";
+            MensagemErro = "Não é possível excluir um professor que possui alunos orientandos.";
             return RedirectToPage();
         }
 
         await _userManager.DeleteAsync(usuario);
 
-        MensagemSucesso = "Usuario excluido com sucesso.";
+        MensagemSucesso = "Usuário excluído com sucesso.";
         return RedirectToPage();
     }
 

@@ -21,8 +21,8 @@ public class CursosModel : PageModel
     [BindProperty, Required(ErrorMessage = "Informe o nome do curso.")]
     public string Nome { get; set; } = string.Empty;
 
-    [BindProperty, Required(ErrorMessage = "Informe a carga horaria minima.")]
-    [Range(1, 10000, ErrorMessage = "Informe uma carga horaria valida.")]
+    [BindProperty, Required(ErrorMessage = "Informe a carga horária mínima.")]
+    [Range(1, 10000, ErrorMessage = "Informe uma carga horária válida.")]
     public int CargaHorariaMinima { get; set; }
 
     public List<Curso> Cursos { get; set; } = new();
@@ -70,13 +70,13 @@ public class CursosModel : PageModel
 
             if (possuiDisciplinas)
             {
-                MensagemErro = "Nao e possivel excluir um curso que possui disciplinas cadastradas.";
+                MensagemErro = "Não é possível excluir um curso que possui disciplinas cadastradas.";
                 return RedirectToPage();
             }
 
             _context.Cursos.Remove(curso);
             await _context.SaveChangesAsync();
-            MensagemSucesso = "Curso excluido com sucesso.";
+            MensagemSucesso = "Curso excluído com sucesso.";
         }
 
         return RedirectToPage();

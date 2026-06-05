@@ -38,7 +38,7 @@ public class TurmasModel : PageModel
     public string Horario { get; set; } = string.Empty;
 
     [BindProperty, Required(ErrorMessage = "Informe a capacidade.")]
-    [Range(1, 500, ErrorMessage = "Informe uma capacidade valida.")]
+    [Range(1, 500, ErrorMessage = "Informe uma capacidade válida.")]
     public int Capacidade { get; set; }
 
     public List<SelectListItem> Disciplinas { get; set; } = new();
@@ -103,14 +103,14 @@ public class TurmasModel : PageModel
     {
         if (!await _context.Disciplinas.AnyAsync(disciplina => disciplina.Id == DisciplinaId))
         {
-            ModelState.AddModelError(nameof(DisciplinaId), "Disciplina invalida.");
+            ModelState.AddModelError(nameof(DisciplinaId), "Disciplina inválida.");
         }
 
         var professor = await _userManager.FindByIdAsync(ProfessorId);
 
         if (professor is null || !await _userManager.IsInRoleAsync(professor, nameof(UserRole.Professor)))
         {
-            ModelState.AddModelError(nameof(ProfessorId), "Professor invalido.");
+            ModelState.AddModelError(nameof(ProfessorId), "Professor inválido.");
         }
     }
 

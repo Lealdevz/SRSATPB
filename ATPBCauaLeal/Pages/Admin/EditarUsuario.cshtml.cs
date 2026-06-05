@@ -83,7 +83,7 @@ public class EditarUsuarioModel : PageModel
             }
         }
 
-        TempData["MensagemSucesso"] = "Usuario atualizado com sucesso.";
+        TempData["MensagemSucesso"] = "Usuário atualizado com sucesso.";
         return RedirectToPage("/Admin/Usuarios");
     }
 
