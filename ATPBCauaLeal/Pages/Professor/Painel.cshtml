@@ -1,0 +1,38 @@
+@page
+@model ATPBCauaLeal.Pages.Professor.PainelModel
+
+@{
+    ViewData["Title"] = "Painel do Professor";
+}
+
+<h2 class="mb-4">Painel do Professor</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Alunos Orientados</h6>
+            <h4>@Model.TotalAlunos</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Turmas</h6>
+            <h4>@Model.TotalTurmas</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Disciplinas</h6>
+            <h4>@Model.TotalDisciplinas</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Cursos</h6>
+            <h4>@Model.TotalCursos</h4>
+        </div>
+    </div>
+</div>

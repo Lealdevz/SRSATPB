@@ -71,6 +71,21 @@
                 </a>
             }
 
+            @if (User.IsInRole("Professor"))
+            {
+                <a class="nav-link sidebar-link" asp-page="/Professor/Painel">
+                    <i class="bi bi-speedometer2 me-2"></i> Painel
+                </a>
+
+                <a class="nav-link sidebar-link" asp-page="/Professor/Alunos">
+                    <i class="bi bi-people me-2"></i> Alunos
+                </a>
+
+                <a class="nav-link sidebar-link" asp-page="/Professor/Turmas">
+                    <i class="bi bi-calendar-week me-2"></i> Turmas
+                </a>
+            }
+
             @if (!User.Identity?.IsAuthenticated ?? true)
             {
                 <a class="nav-link sidebar-link" asp-page="/Index">
@@ -122,7 +137,6 @@
 </div>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 

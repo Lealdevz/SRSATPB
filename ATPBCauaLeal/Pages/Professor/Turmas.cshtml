@@ -1,0 +1,49 @@
+@page
+@model ATPBCauaLeal.Pages.Professor.TurmasModel
+
+@{
+    ViewData["Title"] = "Turmas do Professor";
+}
+
+<h2 class="mb-4">Turmas</h2>
+
+<div class="card shadow-sm p-3">
+    <h5>Minhas Turmas</h5>
+
+    @if (Model.Turmas.Count == 0)
+    {
+        <div class="alert alert-info mb-0">
+            Você ainda não possui turmas cadastradas.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Curso</th>
+                    <th>Disciplina</th>
+                    <th>Dias</th>
+                    <th>Horário</th>
+                    <th class="text-end">Capacidade</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var turma in Model.Turmas)
+                {
+                    <tr>
+                        <td>@turma.Codigo</td>
+                        <td>@turma.Disciplina?.Curso?.Nome</td>
+                        <td>@turma.Disciplina?.Nome</td>
+                        <td>@turma.DiasSemana</td>
+                        <td>@turma.Horario</td>
+                        <td class="text-end">@turma.Capacidade</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

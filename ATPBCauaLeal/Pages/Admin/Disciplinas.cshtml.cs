@@ -22,7 +22,7 @@ public class DisciplinasModel : PageModel
     [BindProperty, Required(ErrorMessage = "Selecione o curso.")]
     public int CursoId { get; set; }
 
-    [BindProperty, Required(ErrorMessage = "Informe o codigo.")]
+    [BindProperty, Required(ErrorMessage = "Informe o código.")]
     public string Codigo { get; set; } = string.Empty;
 
     [BindProperty, Required(ErrorMessage = "Informe o nome.")]

@@ -89,6 +89,7 @@ public class IndexModel : PageModel
         {
             nameof(UserRole.Admin) => RedirectToPage("/Admin/Painel"),
             nameof(UserRole.Aluno) => RedirectToPage("/Aluno/Painel"),
+            nameof(UserRole.Professor) => RedirectToPage("/Professor/Painel"),
             _ => RedirectToPage("/Index")
         };
     }

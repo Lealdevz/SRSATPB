@@ -31,13 +31,13 @@ public class EditarTurmaModel : PageModel
     [BindProperty, Required(ErrorMessage = "Selecione o professor.")]
     public string ProfessorId { get; set; } = string.Empty;
 
-    [BindProperty, Required(ErrorMessage = "Informe o codigo.")]
+    [BindProperty, Required(ErrorMessage = "Informe o código.")]
     public string Codigo { get; set; } = string.Empty;
 
     [BindProperty, Required(ErrorMessage = "Informe os dias da semana.")]
     public string DiasSemana { get; set; } = string.Empty;
 
-    [BindProperty, Required(ErrorMessage = "Informe o horario.")]
+    [BindProperty, Required(ErrorMessage = "Informe o horário.")]
     public string Horario { get; set; } = string.Empty;
 
     [BindProperty, Required(ErrorMessage = "Informe a capacidade.")]
